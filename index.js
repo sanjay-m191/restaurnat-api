@@ -5,41 +5,26 @@ const cors = require('cors')
 const fs = require('fs'); 
 const { json } = require('express/lib/response');
 const fsPromises = require('fs').promises;
+const authService = require('./private/restaurant-app-84bd8-firebase-adminsdk-8g55w-44e327b134.json')
+const middleware = require('./middleware/index')
 
 var bodyParser = require('body-parser');
 const { checkPrimeSync } = require('crypto');
+const req = require('express/lib/request');
 
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
 app.use(bodyParser.json()) 
 app.use(cors());
-//app.use(bodyParser.json());   
 
-const menu = {works: true};
-const partySize = {availableSize: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20]}
-const slots = {avilableSlots: ['6:30 pm', '4:00 pm', '8:00pm', '10:00 pm']}
-const allSlots = {allSlots: ['3:30 pm', '4:00 pm', '4:30 pm', '5:00 pm', '5:30 pm', '6:00 pm', '6:30 pm', '7:00 pm',
-'8:30 pm', '9:00 pm', '10:30 pm', '11:00 pm'
-]}
+const menu = ['food' , 'more food']
+
+app.use(middleware.decodeToken)
+
 async function wrapper(){
     app.get('/menu', (req, res, next) => {
+        console.log(req.headers.auth);
+
         res.json(menu);
-        res.end();
-    })
-
-    app.get('/slots', (req, res, next) => {
-        res.json(allSlots);
-        res.end();
-    })
-
-    app.get('/partySize', (req, res, next) => {
-        res.json(partySize);
-        res.end();
-    })
-
-    app.get('/availableSlots', (req, res, next) => {
-        res.json(slots);
         res.end();
     })
 }
