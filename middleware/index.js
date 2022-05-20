@@ -3,11 +3,17 @@ const admin = require('../firebase-auth');
 class Middleware {
     async decodeToken(req ,res, next){
         const token = req.headers.auth;
-        const decoded = await admin.auth().verifyIdToken(token);
-        if(decoded){
-            return next();
+        return next()
+/*         try{
+            const decoded = await admin.auth().verifyIdToken(token);
+            if(decoded){
+                return next();
+            }
+            return res.json({code: 405,message: 'unauthorized'});
         }
-        return res.json({message: 'unauthorized'});
+        catch{
+            return res.json({code: 403 ,message: 'internal error'});
+        } */
     }
 }
 

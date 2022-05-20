@@ -25,4 +25,3 @@ const analytics = getAnalytics(app); */
 firebase.innitilizeAoo(firebaseConfig);
 const db = firebase.firestore();
 const user = db.collection("Users");
-module.exports = user;
